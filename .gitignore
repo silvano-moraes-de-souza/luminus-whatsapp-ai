@@ -1,0 +1,58 @@
+# ================================================================
+# LUMINUS - ASSISTENTE PESSOAL PERSONALIZADO
+# ARQUIVO: .gitignore
+# DESCRIÇÃO: Arquivos e pastas ignorados pelo Git
+# AUTOR: SILVANO MORAES DE SOUZA
+# VERSÃO: 1.0.1
+# ================================================================
+
+# Arquivos de ambiente (contêm segredos)
+.env
+.env.local
+.env.*.local
+
+# Logs e arquivos temporários
+*.log
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Pastas de memória (dados do usuário)
+memory_db/
+luminus/memory_db/
+luminus/api/memory_db/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Dependências Python
+venv/
+env/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs de teste
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# Docker
+*.log
+# Tool caches and scratch
+graphify-out/
+scratch/
+*.log
+memory_db/

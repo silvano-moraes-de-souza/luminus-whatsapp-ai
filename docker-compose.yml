@@ -1,0 +1,107 @@
+# ================================================================
+# LUMINUS - ASSISTENTE PESSOAL PERSONALIZADO
+# ARQUIVO: docker-compose.yml
+# DESCRIÇÃO: Configuração Docker para Evolution API
+# AUTOR: SILVANO MORAES DE SOUZA
+# VERSÃO: 1.0.0
+# ================================================================
+
+services:
+  evolution_api:
+    container_name: evolution_api
+    image: atendai/evolution-api:latest
+    restart: always
+    ports:
+      - "8085:8080"
+    env_file:
+      - .env
+    depends_on:
+      - evolution_db
+      - evolution_redis
+    volumes:
+      - evolution_data:/evolution/storage
+      - evolution_instances:/evolution/instances
+
+  evolution_db:
+    container_name: evolution_db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: evolution
+      POSTGRES_USER: evolution_user
+      POSTGRES_PASSWORD: ${EVOLUTION_DB_PASSWORD}
+    volumes:
+      - evolution_db_data:/var/lib/postgresql/data
+
+  evolution_redis:
+    container_name: evolution_redis
+    image: redis:6.2-alpine
+    restart: always
+    volumes:
+      - evolution_redis_data:/data
+
+  luminus_app:
+    container_name: luminus_app
+    build: .
+    restart: always
+    command: python luminus/api/server.py
+    ports:
+      - "3000:3000"
+    depends_on:
+      - luminus_db
+      - luminus_redis
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://luminus_redis:6379/0
+      - DATABASE_URL=postgresql://luminus_user:${LUMINUS_DB_PASSWORD}@luminus_db:5432/luminus
+      - PYTHONPATH=/app
+    volumes:
+      - .:/app
+
+  luminus_worker:
+    container_name: luminus_worker
+    build: .
+    restart: always
+    command: celery -A luminus.core.tasks worker --loglevel=info
+    depends_on:
+      - luminus_db
+      - luminus_redis
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://luminus_redis:6379/0
+      - DATABASE_URL=postgresql://luminus_user:${LUMINUS_DB_PASSWORD}@luminus_db:5432/luminus
+      - PYTHONPATH=/app
+    volumes:
+      - .:/app
+
+  luminus_db:
+    container_name: luminus_db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: luminus
+      POSTGRES_USER: luminus_user
+      POSTGRES_PASSWORD: ${LUMINUS_DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - luminus_db_data:/var/lib/postgresql/data
+
+  luminus_redis:
+    container_name: luminus_redis
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - luminus_redis_data:/data
+
+volumes:
+  evolution_data:
+  evolution_instances:
+  evolution_db_data:
+  evolution_redis_data:
+  luminus_db_data:
+  luminus_redis_data:

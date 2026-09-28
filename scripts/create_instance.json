@@ -1,0 +1,6 @@
+{
+  "instanceName": "luminus",
+  "token": "luminus_token",
+  "qrcode": true,
+  "integration": "WHATSAPP-BAILEYS"
+}
