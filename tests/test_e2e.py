@@ -80,7 +80,7 @@ def test_e2e_flow():
             print(f"Erro ao conectar ao webhook: {e}")
             return False
         
-        # 2. Aguarda processamento — maior que o cooldown de 10s do router
+        # 2. Aguarda processamento, maior que o cooldown de 10s do router
         print("Aguardando 12 segundos para o worker processar...")
         time.sleep(12)
 

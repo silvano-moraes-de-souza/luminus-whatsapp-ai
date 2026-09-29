@@ -6,7 +6,7 @@ from luminus.core.integrations.google_adapter import GoogleAdapter
 import requests
 import logging
 
-# Configuração do Celery — lê do env para suportar Docker e execução local
+# Configuração do Celery: lê do env para suportar Docker e execução local
 _REDIS_URL = os.getenv('REDIS_URL', 'redis://luminus_redis:6379/0')
 celery_app = Celery(
     'luminus',

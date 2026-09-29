@@ -87,7 +87,6 @@ PYTHONPATH=. pytest tests/test_memory.py tests/test_router.py
 - 2 of the 7 unit tests in `tests/test_router.py` are out of date: they expect a Groq node that the router no longer has.
 - Audio messages are flagged but not transcribed.
 - Evolution API uses the `latest` image tag; pin a version for anything beyond personal use.
-- Design notes and past diagnostics are in `docs/notes/` (Portuguese).
 
 ## Author
 
