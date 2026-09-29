@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="Luminus" width="100%">
+  <img src="docs/banner-animated.svg" alt="Luminus: a WhatsApp conversation and the Gemini model pool falling back to the next model" width="100%">
 </p>
 
 <p align="center">
